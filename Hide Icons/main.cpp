@@ -10,7 +10,7 @@ NOTIFYICONDATA g_nid;
 HMENU g_hMenu;
 bool g_isStartup = false;
 
-const wchar_t* APP_VERSION = L"v1.1";
+const wchar_t* APP_VERSION = L"v1.2";
 
 // Registry keys
 const wchar_t* REG_PATH = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
@@ -239,6 +239,8 @@ void RemoveTrayIcon() {
     Shell_NotifyIcon(NIM_DELETE, &g_nid);
 }
 
+std::wstring customIconPath;
+
 // Define WM_TASKBARCREATED
 UINT WM_TASKBARCREATED = RegisterWindowMessage(L"TaskbarCreated");
 
@@ -283,6 +285,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             PostQuitMessage(0);
             break;
         }
+        break;
+
+    case WM_SETTINGCHANGE: // Check if the system theme changed
+        LoadCustomIconPath(customIconPath);
+        if (!customIconPath.empty()) {
+            break; // Skip updating if a custom icon is already set
+        }
+        g_nid.hIcon = IsTaskbarDarkMode() ? hWhiteIcon : hBlackIcon;
+        Shell_NotifyIcon(NIM_MODIFY, &g_nid); // Update the tray icon
         break;
 
     case WM_DESTROY:
