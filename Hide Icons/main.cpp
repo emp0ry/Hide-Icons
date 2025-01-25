@@ -10,6 +10,8 @@ NOTIFYICONDATA g_nid;
 HMENU g_hMenu;
 bool g_isStartup = false;
 
+const wchar_t* APP_VERSION = L"v1.1";
+
 // Registry keys
 const wchar_t* REG_PATH = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
 const wchar_t* SETTINGS_REG_PATH = L"SOFTWARE\\Hide Icons";
@@ -209,7 +211,7 @@ void CreateTrayIcon(HWND hWnd) {
     g_nid.uFlags = NIF_ICON | NIF_MESSAGE | NIF_TIP;
     g_nid.uCallbackMessage = WM_APP + 1;
     g_nid.hIcon = IsTaskbarDarkMode() ? hWhiteIcon : hBlackIcon;
-    wcscpy_s(g_nid.szTip, L"Hide Icons v1.0");
+    wcscpy_s(g_nid.szTip, (L"Hide Icons " + std::wstring(APP_VERSION)).c_str());
 
     // Load custom icon if available
     std::wstring customIconPath;
@@ -237,8 +239,17 @@ void RemoveTrayIcon() {
     Shell_NotifyIcon(NIM_DELETE, &g_nid);
 }
 
+// Define WM_TASKBARCREATED
+UINT WM_TASKBARCREATED = RegisterWindowMessage(L"TaskbarCreated");
+
 // Window procedure to handle messages
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    if (message == WM_TASKBARCREATED) {
+        // Taskbar has been recreated, add the tray icon back
+        CreateTrayIcon(hWnd);
+        return 0;
+    }
+
     switch (message) {
     case WM_APP + 1:
         if (LOWORD(lParam) == WM_RBUTTONUP) {
@@ -266,7 +277,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             ResetTrayIcon();
             break;
         case 4:
-            MessageBox(hWnd, L"Hide Icons v1.0\nCreated by emp0ry", L"About", MB_OK | MB_ICONINFORMATION);
+            MessageBox(hWnd, (L"Hide Icons " + std::wstring(APP_VERSION) + L"\nCreated by emp0ry").c_str(), L"About", MB_OK | MB_ICONINFORMATION);
             break;
         case 5:
             PostQuitMessage(0);
