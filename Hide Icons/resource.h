@@ -6,7 +6,7 @@
 #define IDI_ICON2                       103
 #define IDI_ICON3                       104
 
-// Existing control IDs (ensure these are defined)
+// control IDs
 #define IDD_HOTKEY_DIALOG              102
 #define IDC_HOTKEY_EDIT                2001
 #define IDC_CLEAR_BUTTON               2004
