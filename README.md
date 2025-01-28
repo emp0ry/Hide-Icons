@@ -10,6 +10,6 @@
 - **Save Settings**: Remembers your preferences between sessions.
 
 ## Images
-![image](https://github.com/user-attachments/assets/47f4e516-0a92-4358-b87b-7dcd3feceb82)
+![image](https://github.com/user-attachments/assets/3ab899f3-b676-407f-af1f-ac2ab65b4c67)
 ![image](https://github.com/user-attachments/assets/446543ce-6eee-4b69-9d14-dfee572f7349)
-![image](https://github.com/user-attachments/assets/8e1033cd-6d12-43b4-9c66-9367c4242718)
+![image](https://github.com/user-attachments/assets/cbad7e1b-7f69-4399-a7c2-7e17e012f7cd)
