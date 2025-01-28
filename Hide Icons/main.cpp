@@ -80,28 +80,6 @@ void RegisterHotkey(HWND hWnd, HotkeyConfig hotkey) {
     }
 }
 
-std::wstring GetHotkeyDescription(UINT hotkey, UINT modifier) {
-    std::wstring description;
-
-    if (modifier & MOD_CONTROL) description += L"Ctrl + ";
-    if (modifier & MOD_SHIFT) description += L"Shift + ";
-    if (modifier & MOD_ALT) description += L"Alt + ";
-
-    wchar_t keyName[32];
-    UINT scanCode = MapVirtualKey(hotkey, MAPVK_VK_TO_VSC);
-
-    // Handle extended keys (e.g., right Alt, Ctrl)
-    if (hotkey == VK_RCONTROL || hotkey == VK_RMENU ||
-        (hotkey >= VK_PRIOR && hotkey <= VK_HELP)) {
-        scanCode |= 0x100; // Set extended flag
-    }
-
-    GetKeyNameText(scanCode << 16, keyName, 32);
-    description += keyName;
-
-    return description;
-}
-
 LRESULT CALLBACK HotkeyDialogProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
     switch (message) {
     case WM_INITDIALOG: {
@@ -202,6 +180,15 @@ void SetHotkey(HWND hWnd) {
             }
         }
     }
+}
+
+// Function to remove hotkey
+void RemoveHotkey(HWND hWnd) {
+    g_hotkey.hotkey = 0;
+    g_hotkey.modifier = 0;
+
+    SaveHotkey(g_hotkey); // save settings
+    UnregisterHotKey(hWnd, 1);
 }
 
 // Function to get the current Windows theme (light or dark)
@@ -370,6 +357,16 @@ void ChangeTrayIcon() {
     }
 }
 
+// Function to check taskbar theme and update icon color
+void UpdateIconColor() {
+    LoadCustomIconPath(customIconPath);
+    if (!customIconPath.empty()) {
+        return; // Skip updating if a custom icon is already set
+    }
+    g_nid.hIcon = IsTaskbarDarkMode() ? hWhiteIcon : hBlackIcon;
+    Shell_NotifyIcon(NIM_MODIFY, &g_nid); // Update the tray icon
+}
+
 // Function to reset the tray icon to the default
 void ResetTrayIcon() {
     g_nid.hIcon = IsTaskbarDarkMode() ? hWhiteIcon : hBlackIcon;
@@ -450,10 +447,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             SetHotkey(hWnd);
             break;
         case 5:
-            g_hotkey.hotkey = 0;
-            g_hotkey.modifier = 0;
-            SaveHotkey(g_hotkey);
-            UnregisterHotKey(hWnd, 1);
+            RemoveHotkey(hWnd);
             break;
         case 6:
             MessageBox(hWnd, (L"Hide Icons " + std::wstring(APP_VERSION) + L"\nCreated by emp0ry").c_str(), L"About", MB_OK | MB_ICONINFORMATION);
@@ -465,12 +459,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         break;
 
     case WM_SETTINGCHANGE: // Check if the system theme changed
-        LoadCustomIconPath(customIconPath);
-        if (!customIconPath.empty()) {
-            break; // Skip updating if a custom icon is already set
-        }
-        g_nid.hIcon = IsTaskbarDarkMode() ? hWhiteIcon : hBlackIcon;
-        Shell_NotifyIcon(NIM_MODIFY, &g_nid); // Update the tray icon
+        UpdateIconColor();
         break;
 
     case WM_HOTKEY:
