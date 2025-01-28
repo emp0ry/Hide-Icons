@@ -2,25 +2,207 @@
 #include <shellapi.h>
 #include <shlwapi.h>
 #include <string>
+#include <sstream>
+#include <Commctrl.h>
 #include "resource.h"
+
+struct HotkeyConfig {
+    UINT hotkey;          // Virtual key code for the hotkey (e.g., VK_F1, VK_A, etc.)
+    UINT modifier;        // Modifier key (e.g., MOD_SHIFT, MOD_CONTROL, MOD_ALT)
+};
 
 // Global variables
 HINSTANCE g_hInstance;
 NOTIFYICONDATA g_nid;
 HMENU g_hMenu;
 bool g_isStartup = false;
+HotkeyConfig g_hotkey = { 0, 0 }; // Default: no hotkey, no modifier
+std::wstring customIconPath;
 
-const wchar_t* APP_VERSION = L"v1.2";
+const wchar_t* APP_NAME = L"Hide Icons";
+const wchar_t* APP_VERSION = L"v1.3";
 
 // Registry keys
 const wchar_t* REG_PATH = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
 const wchar_t* SETTINGS_REG_PATH = L"SOFTWARE\\Hide Icons";
 const wchar_t* ICON_VALUE_NAME = L"CustomIcon";
 const wchar_t* DESKTOP_ICON_STATE = L"DesktopIconsState";
-const wchar_t* APP_NAME = L"Hide Icons";
+const wchar_t* HOTKEY_VALUE_NAME = L"Hotkey";
+const wchar_t* HOTKEY_MODIFIER_VALUE_NAME = L"HotkeyModifier";
 
 HICON hBlackIcon = (HICON)LoadImage(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDI_ICON2), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE);
 HICON hWhiteIcon = (HICON)LoadImage(GetModuleHandle(nullptr), MAKEINTRESOURCE(IDI_ICON3), IMAGE_ICON, 0, 0, LR_DEFAULTSIZE);
+
+// Define WM_TASKBARCREATED
+UINT WM_TASKBARCREATED = RegisterWindowMessage(L"TaskbarCreated");
+
+// Function to save hotkey to the registry
+void SaveHotkey(const HotkeyConfig& config) {
+    HKEY hKey;
+    if (RegCreateKeyEx(HKEY_CURRENT_USER, SETTINGS_REG_PATH, 0, nullptr, 0, KEY_WRITE, nullptr, &hKey, nullptr) == ERROR_SUCCESS) {
+        RegSetValueEx(hKey, HOTKEY_VALUE_NAME, 0, REG_DWORD, (const BYTE*)&config.hotkey, sizeof(config.hotkey));
+        RegSetValueEx(hKey, HOTKEY_MODIFIER_VALUE_NAME, 0, REG_DWORD, (const BYTE*)&config.modifier, sizeof(config.modifier));
+        RegCloseKey(hKey);
+    }
+}
+
+// Function to load the hotkey from the registry
+HotkeyConfig LoadHotkey() {
+    HKEY hKey;
+    HotkeyConfig config = { 0, 0 };  // Default: no hotkey, no modifier
+    if (RegOpenKeyEx(HKEY_CURRENT_USER, SETTINGS_REG_PATH, 0, KEY_READ, &hKey) == ERROR_SUCCESS) {
+        DWORD dwType = 0;
+        DWORD dwSize = sizeof(config.hotkey);
+        if (RegQueryValueEx(hKey, HOTKEY_VALUE_NAME, 0, &dwType, (LPBYTE)&config.hotkey, &dwSize) != ERROR_SUCCESS) {
+            config.hotkey = 0;  // Default to no hotkey
+        }
+
+        dwSize = sizeof(config.modifier);
+        if (RegQueryValueEx(hKey, HOTKEY_MODIFIER_VALUE_NAME, 0, &dwType, (LPBYTE)&config.modifier, &dwSize) != ERROR_SUCCESS) {
+            config.modifier = 0;  // Default to no modifier
+        }
+
+        RegCloseKey(hKey);
+    }
+    return config;
+}
+
+// Function to register the global hotkey
+void RegisterHotkey(HWND hWnd, HotkeyConfig hotkey) {
+    if (hotkey.hotkey != 0) {
+        // Unregister any existing hotkey
+        UnregisterHotKey(hWnd, 1);
+
+        // Register the new hotkey with the given key and modifier
+        if (!RegisterHotKey(hWnd, 1, hotkey.modifier, hotkey.hotkey)) {
+            MessageBox(hWnd, L"Failed to register hotkey.", L"Error", MB_OK | MB_ICONERROR);
+        }
+    }
+}
+
+std::wstring GetHotkeyDescription(UINT hotkey, UINT modifier) {
+    std::wstring description;
+
+    if (modifier & MOD_CONTROL) description += L"Ctrl + ";
+    if (modifier & MOD_SHIFT) description += L"Shift + ";
+    if (modifier & MOD_ALT) description += L"Alt + ";
+
+    wchar_t keyName[32];
+    UINT scanCode = MapVirtualKey(hotkey, MAPVK_VK_TO_VSC);
+
+    // Handle extended keys (e.g., right Alt, Ctrl)
+    if (hotkey == VK_RCONTROL || hotkey == VK_RMENU ||
+        (hotkey >= VK_PRIOR && hotkey <= VK_HELP)) {
+        scanCode |= 0x100; // Set extended flag
+    }
+
+    GetKeyNameText(scanCode << 16, keyName, 32);
+    description += keyName;
+
+    return description;
+}
+
+LRESULT CALLBACK HotkeyDialogProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
+    switch (message) {
+    case WM_INITDIALOG: {
+        // Load current hotkey into the control
+        SendDlgItemMessage(hWnd, IDC_HOTKEY_EDIT, HKM_SETHOTKEY,
+            MAKEWORD(g_hotkey.hotkey, g_hotkey.modifier), 0);
+
+        // --- Position dialog near the cursor ---
+        POINT cursorPos;
+        GetCursorPos(&cursorPos);  // Get current mouse position
+
+        // Adjust position to avoid covering the cursor
+        cursorPos.x += 20;
+        cursorPos.y += 20;
+
+        // Ensure dialog stays within screen bounds
+        RECT screenRect;
+        SystemParametersInfo(SPI_GETWORKAREA, 0, &screenRect, 0); // Get screen area (excluding taskbar)
+        RECT dialogRect;
+        GetWindowRect(hWnd, &dialogRect);
+        int dialogWidth = dialogRect.right - dialogRect.left;
+        int dialogHeight = dialogRect.bottom - dialogRect.top;
+
+        // Check right edge
+        if (cursorPos.x + dialogWidth > screenRect.right)
+            cursorPos.x = screenRect.right - dialogWidth - 10; // 10px padding
+
+        // Check bottom edge
+        if (cursorPos.y + dialogHeight > screenRect.bottom)
+            cursorPos.y = screenRect.bottom - dialogHeight - 10;
+
+        // Move the dialog
+        SetWindowPos(
+            hWnd,
+            HWND_TOP,
+            cursorPos.x,
+            cursorPos.y,
+            0, 0,  // Keep current size
+            SWP_NOZORDER | SWP_NOSIZE
+        );
+
+        return TRUE;
+    }
+
+    case WM_COMMAND:
+        switch (LOWORD(wParam)) {
+        case IDOK: {
+            // Retrieve the hotkey from the control
+            WORD hotkey = (WORD)SendDlgItemMessage(hWnd, IDC_HOTKEY_EDIT, HKM_GETHOTKEY, 0, 0);
+            UINT vk = LOBYTE(hotkey);
+            UINT mod = HIBYTE(hotkey);
+
+            // Convert modifier flags
+            UINT modifier = 0;
+            if (mod & HOTKEYF_CONTROL) modifier |= MOD_CONTROL;
+            if (mod & HOTKEYF_SHIFT) modifier |= MOD_SHIFT;
+            if (mod & HOTKEYF_ALT) modifier |= MOD_ALT;
+
+            if (vk != 0) {
+                g_hotkey.hotkey = vk;
+                g_hotkey.modifier = modifier;
+            }
+            else {
+                g_hotkey.hotkey = 0;
+                g_hotkey.modifier = 0;
+            }
+            EndDialog(hWnd, IDOK);
+            break;
+        }
+
+        case IDCANCEL:
+            EndDialog(hWnd, IDCANCEL);
+            break;
+
+        case IDC_CLEAR_BUTTON:
+            // Clear the hotkey control
+            SendDlgItemMessage(hWnd, IDC_HOTKEY_EDIT, HKM_SETHOTKEY, 0, 0);
+            break;
+        }
+        break;
+
+    default:
+        return FALSE;
+    }
+    return TRUE;
+}
+
+// Function to set and save a global hotkey
+void SetHotkey(HWND hWnd) {
+    if (!FindWindow(nullptr, L"Hotkey Option")) {
+        if (DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_HOTKEY_DIALOG), hWnd, HotkeyDialogProc) == IDOK) {
+            if (g_hotkey.hotkey != 0) {
+                SaveHotkey(g_hotkey);
+                RegisterHotkey(hWnd, g_hotkey);
+            }
+            else {
+                UnregisterHotKey(hWnd, 1);
+            }
+        }
+    }
+}
 
 // Function to get the current Windows theme (light or dark)
 bool IsTaskbarDarkMode() {
@@ -106,23 +288,15 @@ void SaveDesktopIconsState(BYTE state) {
     }
 }
 
-// Function to get the dekstop icons state from the registry
-bool GetDekstopIconsRegistryState() {
+// Function to get the desktop icons state from the registry
+bool GetDesktopIconsRegistryState() {
     HKEY key;
     BYTE state;
     DWORD stateSize = sizeof(state);
     if (RegOpenKeyEx(HKEY_CURRENT_USER, SETTINGS_REG_PATH, 0, KEY_READ, &key) == ERROR_SUCCESS) {
         if (RegQueryValueEx(key, DESKTOP_ICON_STATE, nullptr, nullptr, &state, &stateSize) == ERROR_SUCCESS) {
             RegCloseKey(key);
-
-            if (state) {
-                return true;
-            }
-            else {
-                return false;
-            }
-
-            return true;
+            return state != 0;
         }
         RegCloseKey(key);
     }
@@ -214,7 +388,6 @@ void CreateTrayIcon(HWND hWnd) {
     wcscpy_s(g_nid.szTip, (L"Hide Icons " + std::wstring(APP_VERSION)).c_str());
 
     // Load custom icon if available
-    std::wstring customIconPath;
     if (LoadCustomIconPath(customIconPath) && !customIconPath.empty()) {
         HICON hCustomIcon = (HICON)LoadImage(nullptr, customIconPath.c_str(), IMAGE_ICON, 0, 0, LR_LOADFROMFILE | LR_DEFAULTSIZE);
         if (hCustomIcon) {
@@ -225,7 +398,7 @@ void CreateTrayIcon(HWND hWnd) {
     // Update state from saved data
     HWND desktopListView = GetDesktopListView();
     if (desktopListView) {
-        if (GetDekstopIconsRegistryState() != IsWindowVisible(desktopListView)) {
+        if (GetDesktopIconsRegistryState() != IsWindowVisible(desktopListView)) {
             ToggleDesktopIcons();
         }
     }
@@ -238,11 +411,6 @@ void CreateTrayIcon(HWND hWnd) {
 void RemoveTrayIcon() {
     Shell_NotifyIcon(NIM_DELETE, &g_nid);
 }
-
-std::wstring customIconPath;
-
-// Define WM_TASKBARCREATED
-UINT WM_TASKBARCREATED = RegisterWindowMessage(L"TaskbarCreated");
 
 // Window procedure to handle messages
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -279,9 +447,18 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             ResetTrayIcon();
             break;
         case 4:
-            MessageBox(hWnd, (L"Hide Icons " + std::wstring(APP_VERSION) + L"\nCreated by emp0ry").c_str(), L"About", MB_OK | MB_ICONINFORMATION);
+            SetHotkey(hWnd);
             break;
         case 5:
+            g_hotkey.hotkey = 0;
+            g_hotkey.modifier = 0;
+            SaveHotkey(g_hotkey);
+            UnregisterHotKey(hWnd, 1);
+            break;
+        case 6:
+            MessageBox(hWnd, (L"Hide Icons " + std::wstring(APP_VERSION) + L"\nCreated by emp0ry").c_str(), L"About", MB_OK | MB_ICONINFORMATION);
+            break;
+        case 7:
             PostQuitMessage(0);
             break;
         }
@@ -296,8 +473,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         Shell_NotifyIcon(NIM_MODIFY, &g_nid); // Update the tray icon
         break;
 
+    case WM_HOTKEY:
+        if (wParam == 1) {
+            ToggleDesktopIcons(); // Execute hotkey action
+        }
+        break;
+
     case WM_DESTROY:
         RemoveTrayIcon();
+        UnregisterHotKey(hWnd, 1);
         PostQuitMessage(0);
         break;
 
@@ -329,14 +513,24 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         return -1;
     }
 
+    // Load the hotkey from the registry and register it
+    g_hotkey = LoadHotkey();
+    RegisterHotkey(hWnd, g_hotkey);
+
     CreateTrayIcon(hWnd);
 
     g_hMenu = CreatePopupMenu();
     AppendMenu(g_hMenu, MF_STRING, 1, L"Startup");
+    AppendMenu(g_hMenu, MF_SEPARATOR, 0, nullptr);
     AppendMenu(g_hMenu, MF_STRING, 2, L"Change Icon");
     AppendMenu(g_hMenu, MF_STRING, 3, L"Reset Icon");
-    AppendMenu(g_hMenu, MF_STRING, 4, L"About");
-    AppendMenu(g_hMenu, MF_STRING, 5, L"Exit");
+    AppendMenu(g_hMenu, MF_SEPARATOR, 0, nullptr);
+    AppendMenu(g_hMenu, MF_STRING, 4, L"Set Hotkey");
+    AppendMenu(g_hMenu, MF_STRING, 5, L"Remove Hotkey");
+    AppendMenu(g_hMenu, MF_SEPARATOR, 0, nullptr);
+    AppendMenu(g_hMenu, MF_STRING, 6, L"About");
+    AppendMenu(g_hMenu, MF_SEPARATOR, 0, nullptr);
+    AppendMenu(g_hMenu, MF_STRING, 7, L"Exit");
 
     MSG msg;
     while (GetMessage(&msg, nullptr, 0, 0)) {
