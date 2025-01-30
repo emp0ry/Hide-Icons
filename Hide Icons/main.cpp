@@ -16,11 +16,12 @@ HINSTANCE g_hInstance;
 NOTIFYICONDATA g_nid;
 HMENU g_hMenu;
 bool g_isStartup = false;
+HHOOK g_hKeyboardHook = nullptr;
 HotkeyConfig g_hotkey = { 0, 0 }; // Default: no hotkey, no modifier
 std::wstring customIconPath;
 
 const wchar_t* APP_NAME = L"Hide Icons";
-const wchar_t* APP_VERSION = L"v1.4";
+const wchar_t* APP_VERSION = L"v1.5";
 
 // Registry keys
 const wchar_t* REG_PATH = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
@@ -65,19 +66,6 @@ HotkeyConfig LoadHotkey() {
         RegCloseKey(hKey);
     }
     return config;
-}
-
-// Function to register the global hotkey
-void RegisterHotkey(HWND hWnd, HotkeyConfig hotkey) {
-    if (hotkey.hotkey != 0) {
-        // Unregister any existing hotkey
-        UnregisterHotKey(hWnd, 1);
-
-        // Register the new hotkey with the given key and modifier
-        if (!RegisterHotKey(hWnd, 1, hotkey.modifier, hotkey.hotkey)) {
-            MessageBox(hWnd, L"Failed to register hotkey.", L"Error", MB_OK | MB_ICONERROR);
-        }
-    }
 }
 
 LRESULT CALLBACK HotkeyDialogProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -171,13 +159,7 @@ LRESULT CALLBACK HotkeyDialogProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
 void SetHotkey(HWND hWnd) {
     if (!FindWindow(nullptr, L"Hotkey Option")) {
         if (DialogBox(g_hInstance, MAKEINTRESOURCE(IDD_HOTKEY_DIALOG), hWnd, HotkeyDialogProc) == IDOK) {
-            if (g_hotkey.hotkey != 0) {
-                SaveHotkey(g_hotkey);
-                RegisterHotkey(hWnd, g_hotkey);
-            }
-            else {
-                UnregisterHotKey(hWnd, 1);
-            }
+            SaveHotkey(g_hotkey);
         }
     }
 }
@@ -188,7 +170,6 @@ void RemoveHotkey(HWND hWnd) {
     g_hotkey.modifier = 0;
 
     SaveHotkey(g_hotkey); // save settings
-    UnregisterHotKey(hWnd, 1);
 }
 
 // Function to get the current Windows theme (light or dark)
@@ -409,6 +390,44 @@ void RemoveTrayIcon() {
     Shell_NotifyIcon(NIM_DELETE, &g_nid);
 }
 
+LRESULT CALLBACK LowLevelKeyboardProc(int nCode, WPARAM wParam, LPARAM lParam) {
+    if (nCode == HC_ACTION) {
+        KBDLLHOOKSTRUCT* pKeyInfo = (KBDLLHOOKSTRUCT*)lParam;
+        bool isKeyDown = (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN);
+
+        // Check if the pressed key matches the hotkey
+        if (isKeyDown && pKeyInfo->vkCode == g_hotkey.hotkey) {
+            // Check modifiers (Ctrl, Shift, Alt)
+            bool ctrlPressed = (GetAsyncKeyState(VK_CONTROL) & 0x8000);
+            bool shiftPressed = (GetAsyncKeyState(VK_SHIFT) & 0x8000);
+            bool altPressed = (GetAsyncKeyState(VK_MENU) & 0x8000);
+
+            // Match modifiers to the hotkey's configuration
+            if ((g_hotkey.modifier & MOD_CONTROL) == (ctrlPressed ? MOD_CONTROL : 0) &&
+                (g_hotkey.modifier & MOD_SHIFT) == (shiftPressed ? MOD_SHIFT : 0) &&
+                (g_hotkey.modifier & MOD_ALT) == (altPressed ? MOD_ALT : 0))
+            {
+                // Trigger Hide Icons app action
+                ToggleDesktopIcons();
+            }
+        }
+    }
+
+    // Pass the event to the next hook or application
+    return CallNextHookEx(g_hKeyboardHook, nCode, wParam, lParam);
+}
+
+void InstallKeyboardHook() {
+    g_hKeyboardHook = SetWindowsHookEx(WH_KEYBOARD_LL, LowLevelKeyboardProc, g_hInstance, 0);
+}
+
+void UninstallKeyboardHook() {
+    if (g_hKeyboardHook) {
+        UnhookWindowsHookEx(g_hKeyboardHook);
+        g_hKeyboardHook = nullptr;
+    }
+}
+
 // Window procedure to handle messages
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
     if (message == WM_TASKBARCREATED) {
@@ -462,15 +481,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
         UpdateIconColor();
         break;
 
-    case WM_HOTKEY:
-        if (wParam == 1) {
-            ToggleDesktopIcons(); // Execute hotkey action
-        }
-        break;
-
     case WM_DESTROY:
         RemoveTrayIcon();
-        UnregisterHotKey(hWnd, 1);
         PostQuitMessage(0);
         break;
 
@@ -502,10 +514,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         return -1;
     }
 
-    // Load the hotkey from the registry and register it
     g_hotkey = LoadHotkey();
-    RegisterHotkey(hWnd, g_hotkey);
-
+    InstallKeyboardHook();
     CreateTrayIcon(hWnd);
 
     g_hMenu = CreatePopupMenu();
@@ -521,6 +531,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     AppendMenu(g_hMenu, MF_SEPARATOR, 0, nullptr);
     AppendMenu(g_hMenu, MF_STRING, 7, L"Exit");
 
+
     MSG msg;
     while (GetMessage(&msg, nullptr, 0, 0)) {
         TranslateMessage(&msg);
@@ -528,5 +539,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     }
 
     DestroyMenu(g_hMenu);
+    UninstallKeyboardHook();
     return 0;
 }
