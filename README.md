@@ -8,8 +8,9 @@
 - **Run at Startup**: Enable or disable the application to start with Windows.
 - **Dark/Light Mode Support**: Automatically adapts to the Windows theme (when using the default tray icon).
 - **Save Settings**: Remembers your preferences between sessions.
+- **Low-Level Keyboard Hook**: A low-level keyboard hook allows you to work with hotkeys without blocking system-wide hotkeys.
 
 ## Images
 ![image](https://github.com/user-attachments/assets/3ab899f3-b676-407f-af1f-ac2ab65b4c67)
 ![image](https://github.com/user-attachments/assets/446543ce-6eee-4b69-9d14-dfee572f7349)
-![image](https://github.com/user-attachments/assets/cbad7e1b-7f69-4399-a7c2-7e17e012f7cd)
+![image](https://github.com/user-attachments/assets/9756c1ba-c9e7-47a7-9849-ca72b70299cb)
