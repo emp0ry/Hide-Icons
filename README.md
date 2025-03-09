@@ -1,6 +1,10 @@
 # Hide Icons
 **Hide Icons** is a simple Windows tray application that lets you quickly hide or show desktop icons, manage application startup settings, and customize the tray icon.
 
+## Donation
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/emp0ry)
+
 ## Features
 - **Toggle Desktop Icons**: Quickly hide or show desktop icons with a single click.
 - **Custom Tray Icon**: Change the tray icon to one of your choice.
