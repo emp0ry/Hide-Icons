@@ -1,10 +1,12 @@
+#include "Updater.h"
+#include "resource.h"
 #include <windows.h>
 #include <shellapi.h>
 #include <shlwapi.h>
 #include <string>
 #include <sstream>
 #include <Commctrl.h>
-#include "resource.h"
+#include <codecvt>
 
 struct HotkeyConfig {
     UINT hotkey;          // Virtual key code for the hotkey (e.g., VK_F1, VK_A, etc.)
@@ -21,7 +23,7 @@ HotkeyConfig g_hotkey = { 0, 0 }; // Default: no hotkey, no modifier
 std::wstring customIconPath;
 
 const wchar_t* APP_NAME = L"Hide Icons";
-const wchar_t* APP_VERSION = L"v1.5";
+const wchar_t* APP_VERSION = L"v1.6";
 
 // Registry keys
 const wchar_t* REG_PATH = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
@@ -428,6 +430,19 @@ void UninstallKeyboardHook() {
     }
 }
 
+std::string WCharToString(const wchar_t* wideStr) {
+    int size = WideCharToMultiByte(CP_UTF8, 0, wideStr, -1, nullptr, 0, nullptr, nullptr);
+    if (size == 0) {
+        return "";
+    }
+
+    char* buffer = new char[size];
+    WideCharToMultiByte(CP_UTF8, 0, wideStr, -1, buffer, size, nullptr, nullptr);
+    std::string result(buffer);
+    delete[] buffer;
+    return result;
+}
+
 // Window procedure to handle messages
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
     if (message == WM_TASKBARCREATED) {
@@ -493,6 +508,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
+    Updater updater(WCharToString(APP_VERSION), "emp0ry", "ErScripts", "ErScripts");
+    if (updater.checkAndUpdate())
+        return 0;
+
     CreateMutexA(0, FALSE, "Local\\HideIcons_TrayApp");
     if (GetLastError() == ERROR_ALREADY_EXISTS) {
         MessageBox(NULL, L"Hide Icons is already running!", NULL, MB_ICONERROR | MB_OK);
@@ -519,7 +538,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     CreateTrayIcon(hWnd);
 
     g_hMenu = CreatePopupMenu();
-    AppendMenu(g_hMenu, MF_STRING, 1, L"Startup");
+    AppendMenu(g_hMenu, MF_STRING, 1, L"Run at Startup");
     AppendMenu(g_hMenu, MF_SEPARATOR, 0, nullptr);
     AppendMenu(g_hMenu, MF_STRING, 2, L"Change Icon");
     AppendMenu(g_hMenu, MF_STRING, 3, L"Reset Icon");
