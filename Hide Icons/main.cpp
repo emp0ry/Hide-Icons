@@ -430,16 +430,37 @@ void UninstallKeyboardHook() {
     }
 }
 
+// For version
 std::string WCharToString(const wchar_t* wideStr) {
-    int size = WideCharToMultiByte(CP_UTF8, 0, wideStr, -1, nullptr, 0, nullptr, nullptr);
-    if (size == 0) {
+    if (!wideStr) {
         return "";
     }
 
+    // Get required buffer size
+    size_t size = 0;
+    errno_t err = wcstombs_s(&size, nullptr, 0, wideStr, 0);
+    if (err != 0 || size == 0) {
+        return "";
+    }
+
+    // Allocate buffer
     char* buffer = new char[size];
-    WideCharToMultiByte(CP_UTF8, 0, wideStr, -1, buffer, size, nullptr, nullptr);
+    size_t convertedChars = 0;
+
+    // Convert
+    err = wcstombs_s(&convertedChars, buffer, size, wideStr, _TRUNCATE);
+    if (err != 0) {
+        delete[] buffer;
+        return "";
+    }
+
+    // Create string and remove first character
     std::string result(buffer);
     delete[] buffer;
+
+    if (!result.empty()) {
+        return result.substr(1);
+    }
     return result;
 }
 

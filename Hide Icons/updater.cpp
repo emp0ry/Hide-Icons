@@ -163,6 +163,10 @@ bool Updater::checkAndUpdate() {
         std::string latestVersion = json["tag_name"].get<std::string>().substr(1);
 
         if (latestVersion > currentVersion) {
+            std::string text1 = std::format("{} is going to update and will restart.", repoName);
+            std::string text2 = std::format("{} Update", repoName);
+            MessageBoxA(NULL, text1.c_str(),
+                text2.c_str(), MB_OK | MB_ICONINFORMATION);
 
             std::string downloadUrl = "https://github.com/" + githubAuthor + "/" + repoName + "/releases/download/v" + latestVersion + "/" + downloadExeName;
             std::string tempPath = currentExeName + "_new.exe";
