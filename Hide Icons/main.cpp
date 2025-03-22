@@ -508,7 +508,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
 }
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow) {
-    Updater updater(WCharToString(APP_VERSION), "emp0ry", "ErScripts", "ErScripts");
+    Updater updater(WCharToString(APP_VERSION), "emp0ry", "Hide-Icons", "Hide.Icons");
     if (updater.checkAndUpdate())
         return 0;
 
