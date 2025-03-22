@@ -1,91 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
-        <head>
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-QY5L70VTTG"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        
-        gtag('config', 'G-QY5L70VTTG');
-        </script>
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QY5L70VTTG"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QY5L70VTTG');
+    </script>
 
-        <meta charset="UTF-8">
-        <meta name="language" content="en">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Hide Icons - A lightweight Windows tray app to toggle desktop icons, set custom hotkeys, and manage startup. Simple, fast, and clutter-free.">
-        <meta name="keywords" content="Hide Icons, Windows app, desktop icons, tray tool, hotkeys, emp0ry, GitHub">
-        <meta name="author" content="emp0ry">
-        <meta name="robots" content="index, follow">
+    <meta charset="UTF-8">
+    <meta name="language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hide-Icons - A lightweight Windows tray app to toggle desktop icons, set custom hotkeys, and manage startup. Simple, fast, clutter-free.">
+    <meta name="keywords" content="Hide-Icons, Windows app, desktop icons, tray tool, hotkeys, emp0ry, GitHub">
+    <meta name="author" content="emp0ry">
+    <meta name="robots" content="index, follow">
 
-        <!-- Security -->
-        <meta name="referrer" content="strict-origin-when-cross-origin">
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com;">
+    <!-- Security -->
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com;">
 
-        <!-- Performance -->
-        <meta name="theme-color" content="#4b0082">
+    <!-- Performance -->
+    <meta name="theme-color" content="#4b0082">
 
-        <!-- Apple -->
-        <meta name="apple-mobile-web-app-capable" content="yes">
-        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Apple -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
-        <!-- Open Graph / Facebook -->
-        <meta property="og:type" content="website">
-        <meta property="og:url" content="https://emp0ry.github.io/Hide-Icons">
-        <meta property="og:title" content="Hide Icons - Toggle Desktop Icons with Ease">
-        <meta property="og:description" content="A lightweight Windows tray app to hide/show desktop icons, set hotkeys, and manage startup. Keep your desktop clean and simple.">
-        <!-- Uncomment and update with your icon if you have one -->
-        <!-- <meta property="og:image" content="https://github.com/emp0ry/Hide-Icons/raw/main/icon.ico"> -->
-        <meta property="og:site_name" content="Hide Icons">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://emp0ry.github.io/Hide-Icons/">
+    <meta property="og:title" content="Hide-Icons - Toggle Desktop Icons with Ease">
+    <meta property="og:description" content="A lightweight Windows tray app to hide/show desktop icons, set hotkeys, and manage startup. Keep your desktop clean and simple.">
+    <!-- <meta property="og:image" content="https://github.com/emp0ry/Hide-Icons/raw/main/icon.ico"> -->
+    <meta property="og:site_name" content="Hide-Icons">
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="https://emp0ry.github.io/Hide-Icons">
-        <meta property="twitter:title" content="Hide Icons - Toggle Desktop Icons with Ease">
-        <meta property="twitter:description" content="A lightweight Windows tray app to hide/show desktop icons, set hotkeys, and manage startup. Keep your desktop clean and simple.">
-        <!-- <meta property="twitter:image" content="https://github.com/emp0ry/Hide-Icons/raw/main/icon.ico"> -->
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://emp0ry.github.io/Hide-Icons/">
+    <meta name="twitter:title" content="Hide-Icons - Toggle Desktop Icons with Ease">
+    <meta name="twitter:description" content="A lightweight Windows tray app to hide/show desktop icons, set hotkeys, and manage startup. Keep your desktop clean and simple.">
+    <!-- <meta name="twitter:image" content="https://github.com/emp0ry/Hide-Icons/raw/main/icon.ico"> -->
 
-        <!-- Discord -->
-        <meta property="discord:title" content="Hide Icons - Toggle Desktop Icons with Ease">
-        <meta property="discord:description" content="A lightweight Windows tray app to hide/show desktop icons, set hotkeys, and manage startup. Keep your desktop clean and simple.">
-        <!-- <meta property="discord:image" content="https://github.com/emp0ry/Hide-Icons/raw/main/icon.ico"> -->
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://emp0ry.github.io/Hide-Icons/">
 
-        <!-- Canonical URL -->
-        <link rel="canonical" href="https://emp0ry.github.io/Hide-Icons">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="https://github.com/emp0ry/Hide-Icons/raw/main/icon.ico">
 
-        <!-- Favicon (Update with your own if you have one) -->
-        <link rel="icon" type="image/x-icon" href="https://github.com/emp0ry/Hide-Icons/raw/main/icon.ico">
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-        <!-- Google Fonts: Poppins -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <!-- External CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
 
-        <!-- External CSS -->
-        <link rel="stylesheet" href="css/styles.css">
+    <title>Hide-Icons - Clean Your Desktop in One Click</title>
 
-        <title>Hide Icons - Clean Your Desktop in One Click</title>
-
-        <!-- Structured Data (Schema.org) -->
-        <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "name": "Hide Icons",
-          "url": "https://emp0ry.github.io/Hide-Icons",
-          "description": "A lightweight Windows tray app to toggle desktop icons, set custom hotkeys, and manage startup. Simple, fast, and clutter-free.",
-          "author": {
-            "@type": "Person",
-            "name": "emp0ry"
-          }
-        }
-        </script>
-    </head>
+    <!-- Structured Data (Schema.org) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Hide-Icons",
+      "url": "https://emp0ry.github.io/Hide-Icons/",
+      "description": "A lightweight Windows tray app to toggle desktop icons, set custom hotkeys, and manage startup. Simple, fast, and clutter-free.",
+      "author": {
+        "@type": "Person",
+        "name": "emp0ry"
+      }
+    }
+    </script>
+</head>
 <body>
     <div class="container">
-        <h1>Hide Icons</h1>
+        <h1>Hide-Icons</h1>
         <div class="about">
-            <p><strong>Hide Icons</strong> is a simple Windows tray app that lets you toggle desktop icons on or off with a click, set custom hotkeys, and control startup settings. Lightweight and built for a clutter-free desktop.</p>
-            <a href="https://github.com/emp0ry/Hide-Icons" class="btn" aria-label="Visit the Hide Icons repository on GitHub">Visit the Repository</a>
+            <p><strong>Hide-Icons</strong> is a simple Windows tray app that lets you toggle desktop icons on or off with a click, set custom hotkeys, and control startup settings. Lightweight and built for a clutter-free desktop.</p>
+            <div class="about-buttons">
+                <a href="https://github.com/emp0ry/Hide-Icons" class="btn" aria-label="Visit the Hide-Icons repository on GitHub">Visit the Repository</a>
+                <a href="/" class="btn back-to-hub" aria-label="Back to emp0ry's Hub">Back to Hub</a>
+            </div>
         </div>
 
         <h2>Key Features</h2>
