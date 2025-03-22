@@ -73,6 +73,7 @@ p {
     padding: 20px;
     border-radius: 15px;
     margin-bottom: 40px;
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
@@ -94,6 +95,7 @@ p {
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.3s ease;
+    -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
 }
 
