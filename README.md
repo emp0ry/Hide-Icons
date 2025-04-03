@@ -1,6 +1,6 @@
 # Hide Icons 🖥️
-![GitHub release](https://img.shields.io/github/v/release/emp0ry/Hide-Icons?label=Latest%20Version)
-![License](https://img.shields.io/github/license/emp0ry/Hide-Icons)
+[![GitHub release](https://img.shields.io/github/v/release/emp0ry/Hide-Icons?label=Latest%20Version)](https://github.com/emp0ry/Hide-Icons/releases/latest)
+[![License](https://img.shields.io/github/license/emp0ry/Hide-Icons)](LICENSE.txt)
 
 **Hide Icons** is a simple Windows tray application that lets you quickly hide or show desktop icons, manage application startup settings, and customize the tray icon.
 
