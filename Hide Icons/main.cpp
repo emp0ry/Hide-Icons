@@ -23,7 +23,7 @@ HotkeyConfig g_hotkey = { 0, 0 }; // Default: no hotkey, no modifier
 std::wstring customIconPath;
 
 const wchar_t* APP_NAME = L"Hide Icons";
-const wchar_t* APP_VERSION = L"v1.6";
+const wchar_t* APP_VERSION = L"v1.7";
 
 // Registry keys
 const wchar_t* REG_PATH = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
@@ -274,29 +274,29 @@ bool GetDesktopIconsRegistryState() {
 }
 
 // Function to find the handle to the SysListView32 control
-HWND GetDesktopListView() {
-    HWND progman = FindWindow(L"Progman", nullptr);
-    HWND desktopListView = nullptr;
+HWND GetDesktopListView()
+{
+    HWND progman = FindWindow(L"Progman", NULL);
+    HWND shellViewWin = NULL;
 
-    if (progman) {
-        desktopListView = FindWindowEx(progman, nullptr, L"SysListView32", nullptr);
+    // Sometimes a WorkerW is used
+    HWND desktopHWND = FindWindowEx(progman, NULL, L"SHELLDLL_DefView", NULL);
+    if (!desktopHWND)
+    {
+        // If not under Progman, iterate WorkerW windows
+        HWND workerW = NULL;
+        do {
+            workerW = FindWindowEx(NULL, workerW, L"WorkerW", NULL);
+            desktopHWND = FindWindowEx(workerW, NULL, L"SHELLDLL_DefView", NULL);
+        } while (workerW != NULL && !desktopHWND);
     }
 
-    if (!desktopListView) {
-        HWND shellViewWin = nullptr;
-        HWND workerW = FindWindowEx(nullptr, nullptr, L"WorkerW", nullptr);
-        while (workerW) {
-            shellViewWin = FindWindowEx(workerW, nullptr, L"SHELLDLL_DefView", nullptr);
-            if (shellViewWin) {
-                desktopListView = FindWindowEx(shellViewWin, nullptr, L"SysListView32", nullptr);
-                break;
-            }
-            workerW = FindWindowEx(nullptr, workerW, L"WorkerW", nullptr);
-        }
-    }
+    if (desktopHWND)
+        return FindWindowEx(desktopHWND, NULL, L"SysListView32", NULL); // list of icons
 
-    return desktopListView;
+    return NULL;
 }
+
 
 // Function to toggle the visibility of desktop icons
 void ToggleDesktopIcons() {
