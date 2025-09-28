@@ -8,6 +8,14 @@
 #include <Commctrl.h>
 #include <codecvt>
 
+// COM / Shell headers for robust DefView discovery
+#include <shlobj.h>
+#include <shobjidl.h>
+#include <exdisp.h>
+#include <ole2.h>
+#pragma comment(lib, "Ole32.lib")
+#pragma comment(lib, "OleAut32.lib")
+
 struct HotkeyConfig {
     UINT hotkey;          // Virtual key code for the hotkey (e.g., VK_F1, VK_A, etc.)
     UINT modifier;        // Modifier key (e.g., MOD_SHIFT, MOD_CONTROL, MOD_ALT)
@@ -23,7 +31,7 @@ HotkeyConfig g_hotkey = { 0, 0 }; // Default: no hotkey, no modifier
 std::wstring customIconPath;
 
 const wchar_t* APP_NAME = L"Hide Icons";
-const wchar_t* APP_VERSION = L"v1.7";
+const wchar_t* APP_VERSION = L"v1.8";
 
 // Registry keys
 const wchar_t* REG_PATH = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
@@ -38,6 +46,74 @@ HICON hWhiteIcon = (HICON)LoadImage(GetModuleHandle(nullptr), MAKEINTRESOURCE(ID
 
 // Define WM_TASKBARCREATED
 UINT WM_TASKBARCREATED = RegisterWindowMessage(L"TaskbarCreated");
+
+// COM-based way to get the real SHELLDLL_DefView window
+static HWND GetDefViewByCOM()
+{
+    HWND hwndDefView = nullptr;
+    HRESULT hr = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+    bool needUninit = SUCCEEDED(hr);
+
+    IShellWindows* psw = nullptr;
+    if (SUCCEEDED(CoCreateInstance(CLSID_ShellWindows, nullptr, CLSCTX_ALL, IID_PPV_ARGS(&psw))) && psw) {
+        VARIANT vEmpty; VariantInit(&vEmpty);
+        long lhwnd = 0;
+        IDispatch* pdisp = nullptr;
+        if (SUCCEEDED(psw->FindWindowSW(&vEmpty, &vEmpty, SWC_DESKTOP, &lhwnd, SWFO_NEEDDISPATCH, &pdisp)) && pdisp) {
+            IServiceProvider* psp = nullptr;
+            if (SUCCEEDED(pdisp->QueryInterface(IID_PPV_ARGS(&psp))) && psp) {
+                IShellBrowser* psb = nullptr;
+                if (SUCCEEDED(psp->QueryService(SID_STopLevelBrowser, IID_PPV_ARGS(&psb))) && psb) {
+                    IShellView* psv = nullptr;
+                    if (SUCCEEDED(psb->QueryActiveShellView(&psv)) && psv) {
+                        IOleWindow* pow = nullptr;
+                        if (SUCCEEDED(psv->QueryInterface(IID_PPV_ARGS(&pow))) && pow) {
+                            pow->GetWindow(&hwndDefView);
+                            pow->Release();
+                        }
+                        psv->Release();
+                    }
+                    psb->Release();
+                }
+                psp->Release();
+            }
+            pdisp->Release();
+        }
+        psw->Release();
+    }
+    if (needUninit) CoUninitialize();
+    return hwndDefView;
+}
+
+// Fallback scanner to find SHELLDLL_DefView if COM path fails
+static HWND GetDefViewByScan()
+{
+    HWND defView = nullptr;
+    if (HWND prog = FindWindowW(L"Progman", nullptr)) {
+        defView = FindWindowExW(prog, nullptr, L"SHELLDLL_DefView", nullptr);
+        if (defView) return defView;
+    }
+    HWND worker = nullptr;
+    while ((worker = FindWindowExW(nullptr, worker, L"WorkerW", nullptr)) != nullptr) {
+        defView = FindWindowExW(worker, nullptr, L"SHELLDLL_DefView", nullptr);
+        if (defView) return defView;
+    }
+    return nullptr;
+}
+
+// Helper to read actual user HideIcons value for state reflection
+static bool ReadHideIconsReg(bool& visibleOut)
+{
+    DWORD val = 0, type = 0, cb = sizeof(DWORD);
+    if (RegGetValueW(HKEY_CURRENT_USER,
+        L"Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+        L"HideIcons", RRF_RT_REG_DWORD, &type, &val, &cb) == ERROR_SUCCESS)
+    {
+        visibleOut = (val == 0);
+        return true;
+    }
+    return false;
+}
 
 // Function to save hotkey to the registry
 void SaveHotkey(const HotkeyConfig& config) {
@@ -77,7 +153,7 @@ LRESULT CALLBACK HotkeyDialogProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM
         SendDlgItemMessage(hWnd, IDC_HOTKEY_EDIT, HKM_SETHOTKEY,
             MAKEWORD(g_hotkey.hotkey, g_hotkey.modifier), 0);
 
-        // --- Position dialog near the cursor ---
+        // Position dialog near the cursor
         POINT cursorPos;
         GetCursorPos(&cursorPos);  // Get current mouse position
 
@@ -249,15 +325,6 @@ bool LoadCustomIconPath(std::wstring& iconPath) {
     return false;
 }
 
-// Function to save the desktop icons state in the registry
-void SaveDesktopIconsState(BYTE state) {
-    HKEY key;
-    if (RegCreateKeyEx(HKEY_CURRENT_USER, SETTINGS_REG_PATH, 0, nullptr, 0, KEY_WRITE, nullptr, &key, nullptr) == ERROR_SUCCESS) {
-        RegSetValueEx(key, DESKTOP_ICON_STATE, 0, REG_BINARY, &state, sizeof(BYTE));
-        RegCloseKey(key);
-    }
-}
-
 // Function to get the desktop icons state from the registry
 bool GetDesktopIconsRegistryState() {
     HKEY key;
@@ -297,20 +364,15 @@ HWND GetDesktopListView()
     return NULL;
 }
 
-
 // Function to toggle the visibility of desktop icons
 void ToggleDesktopIcons() {
-    HWND desktopListView = GetDesktopListView();
-    if (desktopListView) {
-        if (IsWindowVisible(desktopListView)) {
-            ShowWindow(desktopListView, SW_HIDE);
-            SaveDesktopIconsState(0);
-        }
-        else {
-            ShowWindow(desktopListView, SW_SHOW);
-            SaveDesktopIconsState(1);
-        }
-    }
+    HWND defView = GetDefViewByCOM();
+    if (!defView) defView = GetDefViewByScan();
+    if (!defView) return;
+
+    DWORD_PTR dw = 0;
+    //SendMessageTimeoutW(defView, WM_COMMAND, 0x7402, 0, SMTO_NORMAL, 2000, &dw);
+    PostMessageW(defView, WM_COMMAND, 0x7402, 0);
 }
 
 // Function to change the tray icon
@@ -375,15 +437,9 @@ void CreateTrayIcon(HWND hWnd) {
         }
     }
 
-    // Update state from saved data
-    HWND desktopListView = GetDesktopListView();
-    if (desktopListView) {
-        if (GetDesktopIconsRegistryState() != IsWindowVisible(desktopListView)) {
-            ToggleDesktopIcons();
-        }
-    }
-
     Shell_NotifyIcon(NIM_ADD, &g_nid);
+    g_nid.uVersion = NOTIFYICON_VERSION_4;
+    Shell_NotifyIcon(NIM_SETVERSION, &g_nid);
     g_isStartup = IsStartupEnabled();
 }
 
@@ -508,7 +564,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) 
             MessageBox(hWnd, (L"Hide Icons " + std::wstring(APP_VERSION) + L"\nCreated by emp0ry").c_str(), L"About", MB_OK | MB_ICONINFORMATION);
             break;
         case 7:
-            PostQuitMessage(0);
+            SendMessage(hWnd, WM_CLOSE, 0, 0);
             break;
         }
         break;

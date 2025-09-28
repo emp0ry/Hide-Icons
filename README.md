@@ -1,41 +1,51 @@
 # Hide Icons 🖥️
 [![GitHub release](https://img.shields.io/github/v/release/emp0ry/Hide-Icons?label=Latest%20Version)](https://github.com/emp0ry/Hide-Icons/releases/latest)
+[![GitHub release](https://img.shields.io/github/downloads/emp0ry/Hide-Icons/total.svg)](https://github.com/emp0ry/Hide-Icons/releases/latest)
 [![License](https://img.shields.io/github/license/emp0ry/Hide-Icons)](LICENSE.txt)
 
-**Hide Icons** is a simple Windows tray application that lets you quickly hide or show desktop icons, manage application startup settings, and customize the tray icon.
+**Hide Icons** is a lightweight Windows tray app to quickly show/hide desktop icons, set a global hotkey, control auto-start, and use a custom tray icon. Runs as a **standard user** (no admin required).
 
 ## 🚀 Features
 
-✔ **Instant Desktop Icon Toggle** – Hide or show desktop icons with a single click.  
-✔ **Custom Tray Icon** – Choose your own tray icon for a personalized touch.  
-✔ **Hotkey Support** – Set a custom hotkey to toggle desktop icons quickly.  
-✔ **Startup Control** – Enable or disable auto-start with Windows.  
-✔ **Dark/Light Mode** – Matches your Windows theme (when using the default icon).  
-✔ **Persistent Settings** – Saves your preferences between sessions.  
-✔ **Auto Update** - On startup, it checks and updates to the latest version.  
-✔ **Efficient & Lightweight** – Uses a low-level keyboard hook for hotkeys without interfering with system-wide shortcuts.
+- **One-click toggle** – Left-click the tray icon to show/hide desktop icons.
+- **Hotkey support** – Assign your own shortcut for instant toggling.
+- **Custom tray icon** – Load any `.ico`; auto-adapts to dark/light theme when using the default.
+- **Run at startup** – Enable/disable auto-start with a click.
+- **Persistent settings** – Your choices survive restarts.
+- **Auto-update** - Checks and updates on app start.
+- **No hacks** – Uses the desktop’s own command (no poking SysListView32), works on Win10/11.
 
----
+## 💻 System Requirements
+- **Windows 10 22H2** or **Windows 11 23H2/24H2** (and newer)
+- No administrator privileges needed
 
 ## 📸 Screenshots
 
 | ![image](https://github.com/user-attachments/assets/6720dc64-987c-46bb-98e9-9306d2b1e357) | ![image](https://github.com/user-attachments/assets/b13c4bc6-651d-4667-a6af-5fa50b60a6f8) | ![image](https://github.com/user-attachments/assets/f2e712dc-4e3b-4349-8f4d-b0411ac7c23d) |
 |---|---|---|
 
----
+## ⬇️ Install & Run
+1. Download the latest release from [Releases](https://github.com/emp0ry/Hide-Icons/releases).
+2. Launch `HideIcons.exe` - the tray icon appears in the notification area.
+3. **Left-click** the tray icon to toggle icons, **right-click** for the menu.
+> **Uninstall**: Exit the app and delete the files. If you enabled *Run at Startup*, toggle it off from the tray menu before removing.
 
-## 🛠️ How to Use
+## 🧭 Usage
 
-1. **Download & Install** – Get the latest version from [GitHub Releases](https://github.com/emp0ry/Hide-Icons/releases).  
-2. **Run the App** – Launch `HideIcons.exe` to start it in the system tray.  
-3. **Toggle Icons** – Click the tray icon to hide/show desktop icons.  
-4. **Set a Hotkey** – Right-click the tray icon → *Set Hotkey* → Assign a custom shortcut.
-5. **Startup Options** – Enable “Run at Startup” to launch automatically with Windows.  
+- **Toggle icons**: Left-click the tray icon.
+- **Set hotkey**: Right-click → **Set Hotkey** → choose a shortcut.  
+Remove via **Remove Hotkey**.
+- **Auto-start**: Right-click → **Run at Startup**.
+- **Custom icon**: Right-click → **Change Icon** / **Reset Icon**.
 
-## Donation
+## 🤝 Contributing
+Issues and PRs are welcome! Please describe the environment (Windows version, steps to reproduce) when filing bugs.
+
+## ☕ Donation
+If you find this useful:  
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/emp0ry)
 
-## License
+## 📄 License
 
 MIT License. See [LICENSE](LICENSE.txt) for details.
