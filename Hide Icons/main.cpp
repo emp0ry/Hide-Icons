@@ -371,8 +371,7 @@ void ToggleDesktopIcons() {
     if (!defView) return;
 
     DWORD_PTR dw = 0;
-    //SendMessageTimeoutW(defView, WM_COMMAND, 0x7402, 0, SMTO_NORMAL, 2000, &dw);
-    PostMessageW(defView, WM_COMMAND, 0x7402, 0);
+    PostMessage(defView, WM_COMMAND, 29698, 0);
 }
 
 // Function to change the tray icon
