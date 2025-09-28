@@ -31,7 +31,7 @@ HotkeyConfig g_hotkey = { 0, 0 }; // Default: no hotkey, no modifier
 std::wstring customIconPath;
 
 const wchar_t* APP_NAME = L"Hide Icons";
-const wchar_t* APP_VERSION = L"v1.8";
+const wchar_t* APP_VERSION = L"v1.8.1";
 
 // Registry keys
 const wchar_t* REG_PATH = L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run";
