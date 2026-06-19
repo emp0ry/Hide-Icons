@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#120b24">
+    <meta name="description" content="Hide Icons is a lightweight Windows tray app to quickly show or hide desktop icons with a global hotkey, custom tray icon, and auto-start. Runs as a standard user, no admin required.">
+    <meta name="author" content="emp0ry">
+    <meta name="application-name" content="Hide Icons">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="keywords" content="Hide Icons, hide desktop icons, Windows tray app, desktop, taskbar, tray icon, Windows 10, Windows 11, emp0ry">
+    <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self';
+        script-src 'self';
+        style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+        font-src 'self' https://fonts.gstatic.com;
+        img-src 'self' data:;
+        connect-src 'self';
+        upgrade-insecure-requests;
+    ">
+    <title>Hide Icons | One-click desktop icon toggle for Windows</title>
+    <link rel="icon" href="img/icon.ico" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&amp;family=Sora:wght@400;500;600;700;800&amp;display=swap"
+      rel="stylesheet"
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Hide Icons">
+    <meta property="og:title" content="Hide Icons | One-click desktop icon toggle for Windows">
+    <meta property="og:description" content="A lightweight Windows tray app to show or hide desktop icons with a global hotkey. No admin required.">
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+  </head>
+  <body data-page="home">
+    <div class="backdrop"></div>
+    <header class="site-header">
+      <div class="container nav-shell">
+        <a class="brand" href="#top" aria-label="Hide Icons home">
+          <span class="brand-badge" aria-hidden="true">🖥️</span>
+          <span class="brand-copy">
+            <strong>Hide Icons</strong>
+          </span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <nav class="site-nav" id="site-nav" aria-label="Primary">
+          <a href="#features">Features</a>
+          <a href="#usage">Usage</a>
+          <a href="#requirements">Requirements</a>
+          <a
+            class="button button-ghost"
+            href="https://github.com/emp0ry/Hide-Icons"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+          <a class="button button-secondary nav-home" href="https://emp0ry.com">Hub</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero section" id="top">
+        <div class="container">
+          <div class="hero-copy hero-centered reveal">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Windows tray app · No admin required · Windows 10 &amp; 11
+            </div>
+            <h1>A cleaner desktop, one click away.</h1>
+            <p class="hero-text">
+              Hide Icons is a lightweight Windows tray app that quickly shows or hides your desktop
+              icons. Set a global hotkey, control auto-start, and use a custom tray icon, all running
+              as a standard user, no administrator privileges needed.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="https://github.com/emp0ry/Hide-Icons" target="_blank" rel="noreferrer">
+                View on GitHub
+              </a>
+              <a class="button button-secondary" href="#features">Explore features</a>
+              <a class="button button-secondary button-accent" href="https://emp0ry.com">Back to Hub</a>
+            </div>
+            <div class="hero-metrics">
+              <div class="metric-card">
+                <strong>One-click toggle</strong>
+                <span>Left-click the tray icon to show or hide icons</span>
+              </div>
+              <div class="metric-card">
+                <strong>No admin</strong>
+                <span>Runs as a standard user on Windows 10 &amp; 11</span>
+              </div>
+              <div class="metric-card">
+                <strong>No hacks</strong>
+                <span>Uses the desktop's own command, not SysListView32</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="features">
+        <div class="container">
+          <div class="section-head reveal">
+            <span class="section-kicker">Features</span>
+            <h2>Small footprint, exactly the controls you need.</h2>
+            <p>
+              Everything lives in the tray. Left-click to toggle, right-click for the menu, and your
+              choices survive restarts.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card reveal">
+              <div class="feature-icon icon-sun"></div>
+              <h3>One-click toggle</h3>
+              <p>Left-click the tray icon to instantly show or hide all desktop icons.</p>
+            </article>
+            <article class="feature-card reveal reveal-delay-sm">
+              <div class="feature-icon icon-play"></div>
+              <h3>Hotkey support</h3>
+              <p>Assign your own keyboard shortcut for instant toggling from anywhere.</p>
+            </article>
+            <article class="feature-card reveal reveal-delay-md">
+              <div class="feature-icon icon-grid"></div>
+              <h3>Custom tray icon</h3>
+              <p>Load any <code>.ico</code>; the default icon auto-adapts to dark and light themes.</p>
+            </article>
+            <article class="feature-card reveal">
+              <div class="feature-icon icon-orbit"></div>
+              <h3>Run at startup</h3>
+              <p>Enable or disable auto-start with a single click from the tray menu.</p>
+            </article>
+            <article class="feature-card reveal reveal-delay-sm">
+              <div class="feature-icon icon-wave"></div>
+              <h3>Persistent &amp; auto-update</h3>
+              <p>Your settings survive restarts, and the app checks for updates on launch.</p>
+            </article>
+            <article class="feature-card reveal reveal-delay-md">
+              <div class="feature-icon icon-lock"></div>
+              <h3>No hacks</h3>
+              <p>Uses the desktop's own show/hide command (no poking SysListView32) on Win10/11.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section experience" id="usage">
+        <div class="container split-layout">
+          <div class="section-head reveal">
+            <span class="section-kicker">Usage</span>
+            <h2>Live in the tray, out of your way.</h2>
+            <p>
+              Launch <code>HideIcons.exe</code> and the tray icon appears in the notification area.
+              Everything is a click away from there.
+            </p>
+          </div>
+
+          <div class="steps-card reveal reveal-delay">
+            <article class="step-row">
+              <span class="step-index">01</span>
+              <div>
+                <h3>Toggle icons</h3>
+                <p>Left-click the tray icon to show or hide your desktop icons.</p>
+              </div>
+            </article>
+            <article class="step-row">
+              <span class="step-index">02</span>
+              <div>
+                <h3>Set a hotkey</h3>
+                <p>Right-click → <strong>Set Hotkey</strong> to choose a shortcut, or <strong>Remove Hotkey</strong> to clear it.</p>
+              </div>
+            </article>
+            <article class="step-row">
+              <span class="step-index">03</span>
+              <div>
+                <h3>Personalize</h3>
+                <p>Right-click → <strong>Run at Startup</strong>, or <strong>Change Icon</strong> / <strong>Reset Icon</strong> for a custom tray look.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section responsibility" id="requirements">
+        <div class="container">
+          <div class="responsibility-shell reveal">
+            <div class="section-head">
+              <span class="section-kicker">Requirements</span>
+              <h2>Light on the system, easy to remove.</h2>
+              <p>
+                Hide Icons runs on modern Windows with no administrator privileges and leaves nothing behind.
+              </p>
+            </div>
+
+            <div class="legal-grid">
+              <article class="legal-card">
+                <h3>Windows 10 &amp; 11</h3>
+                <p>Windows 10 22H2 or Windows 11 23H2/24H2 (and newer).</p>
+              </article>
+              <article class="legal-card">
+                <h3>No admin</h3>
+                <p>Runs as a standard user, no elevation or installer required.</p>
+              </article>
+              <article class="legal-card">
+                <h3>Install &amp; run</h3>
+                <p>Download from Releases, launch <code>HideIcons.exe</code>, and the tray icon appears in the notification area.</p>
+              </article>
+              <article class="legal-card">
+                <h3>Uninstall</h3>
+                <p>Exit the app and delete the files. If you enabled Run at Startup, turn it off from the tray first.</p>
+              </article>
+            </div>
+
+            <div class="responsibility-actions">
+              <a class="button button-secondary button-accent" href="https://github.com/emp0ry/Hide-Icons" target="_blank" rel="noreferrer">View on GitHub</a>
+              <a class="button button-secondary" href="https://github.com/emp0ry/Hide-Icons/releases" target="_blank" rel="noreferrer">Releases</a>
+              <a class="button button-secondary" href="https://emp0ry.com">Back to Hub</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <a class="brand brand-footer" href="#top">
+            <span class="brand-badge" aria-hidden="true">🖥️</span>
+            <span class="brand-copy">
+              <strong>Hide Icons</strong>
+            </span>
+          </a>
+          <p class="footer-copy">
+            A lightweight Windows tray app for showing and hiding desktop icons, no admin required.
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <a href="https://emp0ry.com">Hub</a>
+          <a href="https://github.com/emp0ry/Hide-Icons" target="_blank" rel="noreferrer">GitHub</a>
+          <a href="https://github.com/emp0ry/Hide-Icons/releases" target="_blank" rel="noreferrer">Releases</a>
+        </div>
+
+        <div class="footer-credits">
+          <p>Built and published by emp0ry.</p>
+          <p>MIT licensed.</p>
+          <p>&copy; <span data-year></span> Hide Icons</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
