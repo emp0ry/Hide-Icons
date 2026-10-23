@@ -362,10 +362,3 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /docs/.vscode
-
-# Product website
-/website/node_modules/
-/website/dist/
-
-# Keep the recorded website checks.
-!/website/verification/*.log

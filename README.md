@@ -50,3 +50,7 @@ If you find this useful:
 
 ## 📄 License
 MIT License. See [LICENSE](LICENSE.txt) for details.
+
+## Website
+
+The [product website](https://hideicons.emp0ry.com/) is also available at [emp0ry.com/Hide-Icons/](https://emp0ry.com/Hide-Icons/). Website sources and publication are maintained in the private emp0ry.com project. Completed application releases notify its central static build; this repository contains the application and its technical documentation.
