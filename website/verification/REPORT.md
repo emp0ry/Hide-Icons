@@ -18,7 +18,7 @@ Production source builds from `website/` into the existing `docs/` Pages directo
 - Browser console inspection returned no warnings or errors during the recorded interaction checks.
 - Evidence: `browser-results.json`, `layout-390.png`, `layout-1440.png` and, where present, `menu-390.png`.
 
-## Local timing sample
+## Original bug-fix timing sample, before component alignment
 
 The local production build on this host, without CPU or network throttling, reported LCP **116 ms**, CLS **0**, animation frame median **33.3 ms** and draw-cost p95 **4.80 ms** during the short recorded animation sample. Rendering is intentionally capped at 30fps. These are warm local measurements, not field metrics or a production-network guarantee; INP was not measured.
 
@@ -35,3 +35,7 @@ The local production build on this host, without CPU or network throttling, repo
 The browser checks use viewport emulation in the in-app browser. Physical iPhone/iPad/Android devices, Safari/WebKit and Firefox engines, screen-reader announcements, actual native app installation, login, mailbox delivery and production-device performance were not tested. Reduced motion and canvas unavailability were exercised through the documented diagnostic branches. No-JavaScript availability was checked in generated HTML rather than by disabling JavaScript in the browser.
 
 Preview: **http://127.0.0.1:4177/**. Production: **https://hideicons.emp0ry.com/**.
+
+## Shared component follow-up
+
+The subsequent brand-alignment checks and current screenshots are documented in `BRAND.md` and `brand-results.json`. Those results supersede the earlier component styles.

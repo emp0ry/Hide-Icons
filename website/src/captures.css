@@ -1,0 +1,3 @@
+/* Reserve native screenshot width before lazy images load. */
+.gallery-stage.compact img[src="/site/media/tray-menu.webp"]{width:182px}
+.gallery-stage.compact img[src="/site/media/hotkey.webp"]{width:254px}

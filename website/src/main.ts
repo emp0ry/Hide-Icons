@@ -1,4 +1,6 @@
 import './styles.css';
+import './captures.css';
+import './brand.css';
 import { mountAnchorNavigation } from './core/anchor-navigation';
 import { mountReticle } from './core/reticle';
 import { mountRelease } from './core/releases';

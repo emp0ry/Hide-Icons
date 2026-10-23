@@ -23,7 +23,7 @@ Development uses `http://127.0.0.1:5177/`; production preview uses **http://127.
 
 - `src/index.html`: semantic product copy, working release links, screenshots/diagrams, installation and compatibility. Content remains available without JavaScript.
 - `src/404.html`: the matching not-found page.
-- `src/tokens.css`, `styles.css`: self-hosted Geist, shared graphite/lavender controls and responsive product composition.
+- `src/tokens.css`, `styles.css`, `brand.css`, `captures.css`: self-hosted Geist, shared graphite/lavender controls and responsive product composition.
 - `src/main.ts`: accessible tabs, focus-managed mobile navigation, screenshot viewer and native anchors. No working mini-app or account login is simulated.
 - `src/core/reticle-field.ts`, `reticle.ts`, `pulses.ts`: original icons point artwork. A 24-second cycle, independent bounded waves, pointer/keyboard input, 30fps rendering cap, DPR cap, offscreen/hidden pausing, static reduced motion and SVG fallback.
 - `src/core/releases.ts`: official GitHub release validation. Published download links work without the live API.
@@ -43,3 +43,5 @@ npm run build
 ```
 
 The social SVG uses outlined Geist and mathematical point geometry, converted to a 1200×630 PNG. Production builds were checked in the in-app browser at seven viewport sizes. See `verification/REPORT.md`, `browser-results.json`, and the 390/1440px screenshots for evidence and limitations.
+
+The shared product header and controls match the established ErScripts/MiruShin components. See `verification/BRAND.md` and `brand-results.json` for the measured parity checks. Product compositions and artwork remain individual. Website copy, titles and accessibility labels use no long dashes.

@@ -18,3 +18,17 @@ The previously inspected frontend-design and emilkowalski-motion workflows infor
 ## Layout and compiled-style regressions
 
 Content sections always keep their natural height. A fragment ID on a hero must not inherit a zero-height marker rule. Keep the header outside the clipped scroll layer, and test both section containment and header-link collisions after reflow. Put vendor-prefixed backdrop-filter declarations before the standard declaration so the production CSS retains both engine paths. Mobile visibility rules must come after base display rules.
+
+
+## Canonical product components
+
+`src/brand.css` carries the established ErScripts product components, with matching MiruShin rendering checked in the browser. The source reference is `cs2-ErScripts` commit `42eda6bdf7e496bc72602549e751a7816ef1c44f`, `website/src/styles.css`. The existing homepage shares the desktop wordmark foundation.
+
+- The header uses a full-width three-column grid, fluid gutters, an 80px desktop height, 68px phone height and 64px short-landscape height. Do not add a content-max wrapper inside the header.
+- Wordmark: Geist 900, 25px desktop, 23px at 850px and below, 22px at 370px and below, letter spacing -0.07em. The dot inherits the same spacing and uses the shared lavender.
+- Product name: Geist 500, 14px desktop and 13px on compact widths. Divider: weight 300, 22px desktop and 18px on phones. Identity gaps are 18px, 12px and 10px at the reference breakpoints.
+- Buttons retain the reference dark translucent surface, 8px blur, thin lavender border, 5px radius, weight 400, 14px base text and the exact compact variants. Hero typography, helper copy, tabs, public contact links and navigation controls follow the same system.
+- Product variation belongs in composition, point geometry and factual content. Shared header geometry, optical wordmark spacing and controls must remain consistent.
+- Do not use em dashes or en dashes in website copy, document titles, metadata or accessibility labels. Use punctuation appropriate to the sentence and write numeric ranges with “to”. Keep exact commands and published filenames intact.
+
+`src/captures.css` reserves native widths for compact lazy-loaded screenshots. A hash navigation must not shift after those images acquire their intrinsic dimensions.

@@ -1,0 +1,108 @@
+
+> emp0ry-icons-website@1.0.0 test
+> node --test tests/*.test.ts
+
+✔ anchor alignment uses the clipped scrollport, and manual scrolling releases resize alignment (2.983875ms)
+✔ page keys scroll from the fixed header and document focus without intercepting content or controls (1.156209ms)
+✔ a hash away from its target does not override restored reading position on resize (0.128458ms)
+✔ initial fragments are repaired only at the untouched scroll origin (1.111875ms)
+✔ icons: deterministic silhouette closes its loop without clipping or invalid values (7.391459ms)
+✔ cursor: deterministic silhouette closes its loop without clipping or invalid values (3.63075ms)
+✔ lens: deterministic silhouette closes its loop without clipping or invalid values (2.6265ms)
+✔ bridge: deterministic silhouette closes its loop without clipping or invalid values (1.718917ms)
+✔ console: deterministic silhouette closes its loop without clipping or invalid values (0.921125ms)
+✔ compass: deterministic silhouette closes its loop without clipping or invalid values (2.442125ms)
+✔ refresh: deterministic silhouette closes its loop without clipping or invalid values (1.372834ms)
+✔ rapid input preserves existing wave ages and remains bounded (0.113917ms)
+✔ official release assets resolve with exact repository, tag and positive size (1.560042ms)
+✔ a partial release remains useful without inventing missing formats (0.579791ms)
+✔ foreign URLs, credentials, drafts, prereleases and unfinished assets are rejected (0.146792ms)
+✔ the reticle pauses offscreen/hidden and releases its observers, frames, controls and input (8.906791ms)
+✔ native scrolling pauses and resumes the reticle even when observer updates are delayed (3.224375ms)
+✔ reduced motion draws one fixed pose with no decorative control or animation frame (1.61325ms)
+✔ unavailable canvas leaves the SVG fallback in place (0.893417ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.084042
+
+
+> emp0ry-icons-website@1.0.0 build
+> tsc --noEmit && vite build && node scripts/sync-docs.mjs
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 13 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/404.html                       6.28 kB │ gzip: 2.00 kB
+dist/index.html                    15.85 kB │ gzip: 4.74 kB
+dist/site/build/main-QVw8OlrO.css  26.78 kB │ gzip: 6.25 kB
+dist/site/build/main-CpwOwnTs.js   15.68 kB │ gzip: 6.40 kB
+
+✓ built in 69ms
+Synced 14 website files; retained domain, original assets and documentation.
+
+
+> emp0ry-icons-website@1.0.0 check:output
+> node scripts/check-output.mjs
+
+Hide Icons: anchors, verified formats, static content, metadata/CSP, local assets, retained endpoints and Pages output pass.
+
+Final compiled CSS/output verification:
+
+> emp0ry-icons-website@1.0.0 check:output
+> node scripts/check-output.mjs
+
+Hide Icons: anchors, verified formats, static content, metadata/CSP, local assets, retained endpoints and Pages output pass.
+
+Final dialog styling/output verification:
+
+> emp0ry-icons-website@1.0.0 build
+> tsc --noEmit && vite build && node scripts/sync-docs.mjs
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 13 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/404.html                       6.32 kB │ gzip: 1.99 kB
+dist/index.html                    15.90 kB │ gzip: 4.73 kB
+dist/site/build/main-XKcn9xQQ.css  28.47 kB │ gzip: 6.50 kB
+dist/site/build/main-CnoJn4o2.js   15.68 kB │ gzip: 6.40 kB
+
+✓ built in 74ms
+Synced 14 website files; retained domain, original assets and documentation.
+
+
+> emp0ry-icons-website@1.0.0 check:output
+> node scripts/check-output.mjs
+
+Hide Icons: anchors, verified formats, static content, metadata/CSP, local assets, retained endpoints and Pages output pass.
+
+
+> emp0ry-icons-website@1.0.0 build
+> tsc --noEmit && vite build && node scripts/sync-docs.mjs
+
+vite v8.3.4 building client environment for production...
+transforming...
+✓ 13 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/404.html                       6.32 kB │ gzip: 1.99 kB
+dist/index.html                    15.90 kB │ gzip: 4.73 kB
+dist/site/build/main-CIxY9uTL.css  28.52 kB │ gzip: 6.51 kB
+dist/site/build/main-B116piT7.js   15.68 kB │ gzip: 6.40 kB
+
+✓ built in 71ms
+Synced 14 website files; retained domain, original assets and documentation.
+
+
+> emp0ry-icons-website@1.0.0 check:output
+> node scripts/check-output.mjs
+
+Hide Icons: anchors, verified formats, static content, metadata/CSP, local assets, retained endpoints and Pages output pass.
