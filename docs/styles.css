@@ -1846,3 +1846,22 @@ main section[id],
     grid-template-columns: 1fr;
   }
 }
+
+/* Product support uses the shared EMP0RY domain. */
+.site-footer .footer-contact {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 44px;
+  margin-top: .5rem;
+  color: var(--muted-strong, var(--accent-soft));
+  font-size: .875rem;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.site-footer .footer-contact:hover,
+.site-footer .footer-contact:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
