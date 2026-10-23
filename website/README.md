@@ -42,4 +42,4 @@ npm run brand
 npm run build
 ```
 
-The social SVG uses outlined Geist and mathematical point geometry, converted to a 1200×630 PNG. Browser/device verification was explicitly waived for this update; do not interpret logic checks as measured device performance.
+The social SVG uses outlined Geist and mathematical point geometry, converted to a 1200×630 PNG. Production builds were checked in the in-app browser at seven viewport sizes. See `verification/REPORT.md`, `browser-results.json`, and the 390/1440px screenshots for evidence and limitations.

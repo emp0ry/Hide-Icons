@@ -12,8 +12,9 @@ Motion: one calm 24-second point cycle, bounded pointer easing, 160–220ms cont
 
 Accessibility: semantic heading order, native anchors, accessible mobile dialog with Escape/focus restoration, touch-safe controls, gallery tabs with arrow/Home/End keys, descriptive screenshot alt text, one product-support address. Preserve compatibility, cautions, attribution, original domains and public anchors. Do not invent testimonials, installations, versions, platform builds, analytics properties or software guarantees.
 
-The previously inspected frontend-design and emilkowalski-motion workflows inform implementation; the EMP0RY specification is the brand authority. No advertised upstream review/document bundle is claimed. Browser QA is explicitly waived by the user for this round; verify source, output, logic and deployed assets and state that limit.
+The previously inspected frontend-design and emilkowalski-motion workflows inform implementation; the EMP0RY specification is the brand authority. No advertised upstream review/document bundle is claimed. Verify the production build in a browser at phone, tablet, desktop and short-landscape dimensions. Record actual results and distinguish local measurements from physical-device and production-network performance.
 
-## This product
 
-Hide Icons uses the **icons** mathematical study, the **columns** feature composition, and authentic compact captures. Primary message: A little less. A lot clearer. Preserve the constraints and credits recorded in the semantic content and source documentation.
+## Layout and compiled-style regressions
+
+Content sections always keep their natural height. A fragment ID on a hero must not inherit a zero-height marker rule. Keep the header outside the clipped scroll layer, and test both section containment and header-link collisions after reflow. Put vendor-prefixed backdrop-filter declarations before the standard declaration so the production CSS retains both engine paths. Mobile visibility rules must come after base display rules.

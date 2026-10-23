@@ -25,4 +25,8 @@ for(const name of['index','404']){
 for(const [,asset]of main.matchAll(/data-asset="([^"]+)"/g))assert(site.assets.includes(asset),'Only verified published formats');
 const png=readFileSync('dist/site/social-preview.png');assert.equal(png.readUInt32BE(16),1200);assert.equal(png.readUInt32BE(20),630);
 for(const file of JSON.parse(read('pages-files.json')))assert(readFileSync(resolve('dist',file)).equals(readFileSync(resolve('../docs',file))),`Matching output ${file}`);
+const cssPath=main.match(/href="(\/site\/build\/[^"]+\.css)"/)[1];
+const css=read(resolve('dist',cssPath.slice(1)));
+assert(/(?:[;{])backdrop-filter:blur\(/.test(css),'Standard backdrop blur survives CSS compilation');
+assert(css.includes('-webkit-backdrop-filter:'),'Safari backdrop blur retained');
 console.log(`${site.name}: anchors, verified formats, static content, metadata/CSP, local assets, retained endpoints and Pages output pass.`);

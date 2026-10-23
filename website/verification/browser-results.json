@@ -1,0 +1,626 @@
+{
+  "date": "2026-10-23",
+  "environment": "Codex in-app browser, local production builds, no network/CPU throttling; no physical-device claim",
+  "layouts": [
+    {
+      "canvas": "point-field is-ready",
+      "height": 740,
+      "hero": {
+        "bottom": 785.515625,
+        "height": 717.515625,
+        "left": 20,
+        "right": 300,
+        "top": 68,
+        "width": 280
+      },
+      "heroChildren": [
+        {
+          "box": {
+            "bottom": 520.9375,
+            "height": 400.9375,
+            "left": 20,
+            "right": 300,
+            "top": 120,
+            "width": 280
+          },
+          "class": "hero-copy"
+        },
+        {
+          "box": {
+            "bottom": 757.515625,
+            "height": 228.578125,
+            "left": 20,
+            "right": 300,
+            "top": 528.9375,
+            "width": 280
+          },
+          "class": "hero-art"
+        }
+      ],
+      "horizontal": [],
+      "images": [
+        {
+          "loaded": true,
+          "src": "/site/field.svg"
+        },
+        {
+          "loaded": false,
+          "src": "/site/media/tray-menu.webp"
+        },
+        {
+          "loaded": false,
+          "src": "/site/media/hotkey.webp"
+        }
+      ],
+      "metrics": {
+        "cls": "0",
+        "lcp": "92.0"
+      },
+      "motion": "reduced",
+      "outside": [],
+      "scroll": {
+        "scrollWidth": 320,
+        "width": 320
+      },
+      "title": "Hide Icons \u2014 A little less. A lot clearer.",
+      "width": 320,
+      "site": "icons",
+      "size": "320x740",
+      "headerCollisions": []
+    },
+    {
+      "canvas": "point-field is-ready",
+      "height": 844,
+      "hero": {
+        "bottom": 815.375,
+        "height": 747.375,
+        "left": 20,
+        "right": 370,
+        "top": 68,
+        "width": 350
+      },
+      "heroChildren": [
+        {
+          "box": {
+            "bottom": 496.953125,
+            "height": 376.953125,
+            "left": 20,
+            "right": 370,
+            "top": 120,
+            "width": 350
+          },
+          "class": "hero-copy"
+        },
+        {
+          "box": {
+            "bottom": 787.375,
+            "height": 282.421875,
+            "left": 20,
+            "right": 370,
+            "top": 504.953125,
+            "width": 350
+          },
+          "class": "hero-art"
+        }
+      ],
+      "horizontal": [],
+      "images": [
+        {
+          "loaded": true,
+          "src": "/site/field.svg"
+        },
+        {
+          "loaded": false,
+          "src": "/site/media/tray-menu.webp"
+        },
+        {
+          "loaded": false,
+          "src": "/site/media/hotkey.webp"
+        }
+      ],
+      "metrics": {
+        "cls": "0",
+        "lcp": "88.0"
+      },
+      "motion": "reduced",
+      "outside": [],
+      "scroll": {
+        "scrollWidth": 390,
+        "width": 390
+      },
+      "title": "Hide Icons \u2014 A little less. A lot clearer.",
+      "width": 390,
+      "site": "icons",
+      "size": "390x844",
+      "headerCollisions": []
+    },
+    {
+      "canvas": "point-field is-ready",
+      "height": 1024,
+      "hero": {
+        "bottom": 650,
+        "height": 570,
+        "left": 32.2578125,
+        "right": 735.7421875,
+        "top": 80,
+        "width": 703.484375
+      },
+      "heroChildren": [
+        {
+          "box": {
+            "bottom": 548.1796875,
+            "height": 366.359375,
+            "left": 32.2578125,
+            "right": 390.2734375,
+            "top": 181.8203125,
+            "width": 358.015625
+          },
+          "class": "hero-copy"
+        },
+        {
+          "box": {
+            "bottom": 541.328125,
+            "height": 352.6640625,
+            "left": 410.2734375,
+            "right": 735.7421875,
+            "top": 188.6640625,
+            "width": 325.46875
+          },
+          "class": "hero-art"
+        }
+      ],
+      "horizontal": [],
+      "images": [
+        {
+          "loaded": true,
+          "src": "/site/field.svg"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/tray-menu.webp"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/hotkey.webp"
+        }
+      ],
+      "metrics": {
+        "cls": "0.0066",
+        "lcp": "116.0"
+      },
+      "motion": "reduced",
+      "outside": [],
+      "scroll": {
+        "scrollWidth": 768,
+        "width": 768
+      },
+      "title": "Hide Icons \u2014 A little less. A lot clearer.",
+      "width": 768,
+      "site": "icons",
+      "size": "768x1024",
+      "headerCollisions": []
+    },
+    {
+      "canvas": "point-field is-ready",
+      "height": 390,
+      "hero": {
+        "bottom": 650,
+        "height": 570,
+        "left": 35.4453125,
+        "right": 808.546875,
+        "top": 80,
+        "width": 773.1015625
+      },
+      "heroChildren": [
+        {
+          "box": {
+            "bottom": 548.1796875,
+            "height": 366.359375,
+            "left": 35.4453125,
+            "right": 429.921875,
+            "top": 181.8203125,
+            "width": 394.4765625
+          },
+          "class": "hero-copy"
+        },
+        {
+          "box": {
+            "bottom": 557.90625,
+            "height": 385.8203125,
+            "left": 449.921875,
+            "right": 808.546875,
+            "top": 172.0859375,
+            "width": 358.625
+          },
+          "class": "hero-art"
+        }
+      ],
+      "horizontal": [],
+      "images": [
+        {
+          "loaded": true,
+          "src": "/site/field.svg"
+        },
+        {
+          "loaded": false,
+          "src": "/site/media/tray-menu.webp"
+        },
+        {
+          "loaded": false,
+          "src": "/site/media/hotkey.webp"
+        }
+      ],
+      "metrics": {
+        "cls": "0",
+        "lcp": "104.0"
+      },
+      "motion": "reduced",
+      "outside": [],
+      "scroll": {
+        "scrollWidth": 844,
+        "width": 844
+      },
+      "title": "Hide Icons \u2014 A little less. A lot clearer.",
+      "width": 844,
+      "site": "icons",
+      "size": "844x390",
+      "headerCollisions": []
+    },
+    {
+      "canvas": "point-field is-ready",
+      "height": 720,
+      "hero": {
+        "bottom": 782.84375,
+        "height": 702.84375,
+        "left": 53.7578125,
+        "right": 1226.234375,
+        "top": 80,
+        "width": 1172.4765625
+      },
+      "heroChildren": [
+        {
+          "box": {
+            "bottom": 650.4375,
+            "height": 432.0390625,
+            "left": 53.7578125,
+            "right": 649.0546875,
+            "top": 218.3984375,
+            "width": 595.296875
+          },
+          "class": "hero-copy"
+        },
+        {
+          "box": {
+            "bottom": 718.84375,
+            "height": 568.84375,
+            "left": 685.0546875,
+            "right": 1226.234375,
+            "top": 150,
+            "width": 541.1796875
+          },
+          "class": "hero-art"
+        }
+      ],
+      "horizontal": [],
+      "images": [
+        {
+          "loaded": true,
+          "src": "/site/field.svg"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/tray-menu.webp"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/hotkey.webp"
+        }
+      ],
+      "metrics": {
+        "cls": "0",
+        "lcp": "96.0"
+      },
+      "motion": "reduced",
+      "outside": [],
+      "scroll": {
+        "scrollWidth": 1280,
+        "width": 1280
+      },
+      "title": "Hide Icons \u2014 A little less. A lot clearer.",
+      "width": 1280,
+      "site": "icons",
+      "size": "1280x720",
+      "headerCollisions": []
+    },
+    {
+      "canvas": "point-field is-ready",
+      "height": 900,
+      "hero": {
+        "bottom": 840,
+        "height": 760,
+        "left": 60.4765625,
+        "right": 1379.515625,
+        "top": 80,
+        "width": 1319.0390625
+      },
+      "heroChildren": [
+        {
+          "box": {
+            "bottom": 689.65625,
+            "height": 453.3203125,
+            "left": 60.4765625,
+            "right": 732.5390625,
+            "top": 236.3359375,
+            "width": 672.0625
+          },
+          "class": "hero-copy"
+        },
+        {
+          "box": {
+            "bottom": 747.421875,
+            "height": 568.84375,
+            "left": 768.5390625,
+            "right": 1379.515625,
+            "top": 178.578125,
+            "width": 610.9765625
+          },
+          "class": "hero-art"
+        }
+      ],
+      "horizontal": [],
+      "images": [
+        {
+          "loaded": true,
+          "src": "/site/field.svg"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/tray-menu.webp"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/hotkey.webp"
+        }
+      ],
+      "metrics": {
+        "cls": "0",
+        "lcp": "92.0"
+      },
+      "motion": "reduced",
+      "outside": [],
+      "scroll": {
+        "scrollWidth": 1440,
+        "width": 1440
+      },
+      "title": "Hide Icons \u2014 A little less. A lot clearer.",
+      "width": 1440,
+      "site": "icons",
+      "size": "1440x900",
+      "headerCollisions": []
+    },
+    {
+      "canvas": "point-field is-ready",
+      "height": 1080,
+      "hero": {
+        "bottom": 840,
+        "height": 760,
+        "left": 300,
+        "right": 1620,
+        "top": 80,
+        "width": 1320
+      },
+      "heroChildren": [
+        {
+          "box": {
+            "bottom": 689.828125,
+            "height": 453.6640625,
+            "left": 300,
+            "right": 954.7578125,
+            "top": 236.1640625,
+            "width": 654.7578125
+          },
+          "class": "hero-copy"
+        },
+        {
+          "box": {
+            "bottom": 747.421875,
+            "height": 568.84375,
+            "left": 1024.7578125,
+            "right": 1620,
+            "top": 178.578125,
+            "width": 595.2421875
+          },
+          "class": "hero-art"
+        }
+      ],
+      "horizontal": [],
+      "images": [
+        {
+          "loaded": true,
+          "src": "/site/field.svg"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/tray-menu.webp"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/hotkey.webp"
+        }
+      ],
+      "metrics": {
+        "cls": "0",
+        "lcp": "96.0"
+      },
+      "motion": "reduced",
+      "outside": [],
+      "scroll": {
+        "scrollWidth": 1920,
+        "width": 1920
+      },
+      "title": "Hide Icons \u2014 A little less. A lot clearer.",
+      "width": 1920,
+      "site": "icons",
+      "size": "1920x1080",
+      "headerCollisions": []
+    }
+  ],
+  "interactions": {
+    "site": "icons",
+    "mode": "reduced",
+    "tabs": [
+      {
+        "id": "gallery-tab-0",
+        "images": [
+          {
+            "loaded": true,
+            "src": "/site/media/tray-menu.webp"
+          },
+          {
+            "loaded": true,
+            "src": "/site/media/hotkey.webp"
+          }
+        ],
+        "selected": "true",
+        "visible": true
+      },
+      {
+        "id": "install-tab-0",
+        "images": [],
+        "selected": "true",
+        "visible": true
+      }
+    ],
+    "menu": {
+      "open": true,
+      "escape": true,
+      "anchor": {
+        "expected": 92,
+        "focus": "features",
+        "open": false,
+        "top": 91.875
+      }
+    },
+    "faq": {
+      "name": "Does it delete my icons?\n+",
+      "open": ""
+    },
+    "layout": {
+      "canvas": "point-field is-ready",
+      "height": 844,
+      "hero": {
+        "bottom": -4080.125,
+        "height": 747.375,
+        "left": 20,
+        "right": 370,
+        "top": -4827.5,
+        "width": 350
+      },
+      "heroChildren": [
+        {
+          "box": {
+            "bottom": -4398.546875,
+            "height": 376.953125,
+            "left": 20,
+            "right": 370,
+            "top": -4775.5,
+            "width": 350
+          },
+          "class": "hero-copy"
+        },
+        {
+          "box": {
+            "bottom": -4108.125,
+            "height": 282.421875,
+            "left": 20,
+            "right": 370,
+            "top": -4390.546875,
+            "width": 350
+          },
+          "class": "hero-art"
+        }
+      ],
+      "horizontal": [],
+      "images": [
+        {
+          "loaded": true,
+          "src": "/site/field.svg"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/tray-menu.webp"
+        },
+        {
+          "loaded": true,
+          "src": "/site/media/hotkey.webp"
+        }
+      ],
+      "metrics": {
+        "cls": "0.0000",
+        "lcp": "120.0"
+      },
+      "motion": "reduced",
+      "outside": [],
+      "scroll": {
+        "scrollWidth": 390,
+        "width": 390
+      },
+      "title": "Hide Icons \u2014 A little less. A lot clearer.",
+      "width": 390
+    },
+    "errors": []
+  },
+  "gallery": {
+    "site": "icons",
+    "featureAnchor": {
+      "scroll": 782,
+      "top": 91.875
+    },
+    "viewer": {
+      "focus": "image-title",
+      "loaded": true,
+      "open": true,
+      "restored": true
+    },
+    "keyboardTabs": {
+      "focus": "gallery-tab-0",
+      "selected": "gallery-tab-0"
+    },
+    "logs": []
+  },
+  "motion": {
+    "site": "icons",
+    "waves": {
+      "activePulses": "4",
+      "draws": "21",
+      "state": "running"
+    },
+    "running": {
+      "activePulses": "0",
+      "cls": "0",
+      "drawP95": "4.80",
+      "draws": "60",
+      "frameMedian": "33.3",
+      "lcp": "116.0",
+      "state": "running"
+    },
+    "paused": true,
+    "errors": []
+  },
+  "fallback": {
+    "site": "icons",
+    "canvasOpacity": "0",
+    "class": "point-field",
+    "errors": [],
+    "fallbackOpacity": "0.95",
+    "loaded": true,
+    "motion": "reduced"
+  },
+  "final_controls": {
+    "site": "icons",
+    "blur": "blur(32px) saturate(1.1)",
+    "canvasState": "static",
+    "githubHidden": true,
+    "menuHeight": 411.796875
+  }
+}

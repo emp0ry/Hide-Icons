@@ -8,7 +8,8 @@
     "build": "tsc --noEmit && vite build && node scripts/sync-docs.mjs",
     "preview": "vite preview",
     "test": "node --test tests/*.test.ts",
-    "check:output": "node scripts/check-output.mjs"
+    "check:output": "node scripts/check-output.mjs",
+    "brand": "python3 scripts/generate-brand.py"
   },
   "devDependencies": {
     "typescript": "6.0.2",
