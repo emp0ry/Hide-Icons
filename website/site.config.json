@@ -1,0 +1,15 @@
+{
+  "name": "Hide Icons",
+  "repository": "Hide-Icons",
+  "host": "hideicons.emp0ry.com",
+  "kind": "icons",
+  "port": 4177,
+  "version": "v1.8.1",
+  "assets": [
+    "HideIcons.exe"
+  ],
+  "headline": [
+    "A little less.",
+    "A lot clearer."
+  ]
+}

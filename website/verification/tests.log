@@ -1,0 +1,31 @@
+
+> emp0ry-icons-website@1.0.0 test
+> node --test tests/*.test.ts
+
+✔ anchor alignment uses the clipped scrollport, and manual scrolling releases resize alignment (0.857959ms)
+✔ page keys scroll from the fixed header and document focus without intercepting content or controls (0.6415ms)
+✔ a hash away from its target does not override restored reading position on resize (0.111833ms)
+✔ initial fragments are repaired only at the untouched scroll origin (0.69975ms)
+✔ icons: deterministic silhouette closes its loop without clipping or invalid values (10.376417ms)
+✔ cursor: deterministic silhouette closes its loop without clipping or invalid values (2.924208ms)
+✔ lens: deterministic silhouette closes its loop without clipping or invalid values (2.573ms)
+✔ bridge: deterministic silhouette closes its loop without clipping or invalid values (1.795416ms)
+✔ console: deterministic silhouette closes its loop without clipping or invalid values (0.793333ms)
+✔ compass: deterministic silhouette closes its loop without clipping or invalid values (2.13575ms)
+✔ refresh: deterministic silhouette closes its loop without clipping or invalid values (1.312042ms)
+✔ rapid input preserves existing wave ages and remains bounded (0.085625ms)
+✔ official release assets resolve with exact repository, tag and positive size (2.086625ms)
+✔ a partial release remains useful without inventing missing formats (0.409208ms)
+✔ foreign URLs, credentials, drafts, prereleases and unfinished assets are rejected (0.129542ms)
+✔ the reticle pauses offscreen/hidden and releases its observers, frames, controls and input (9.185833ms)
+✔ native scrolling pauses and resumes the reticle even when observer updates are delayed (3.139292ms)
+✔ reduced motion draws one fixed pose with no decorative control or animation frame (1.635625ms)
+✔ unavailable canvas leaves the SVG fallback in place (0.852292ms)
+ℹ tests 19
+ℹ suites 0
+ℹ pass 19
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 125.049708
